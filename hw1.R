@@ -1,3 +1,4 @@
+#3
 n=10000
 dev.off()
 
@@ -19,4 +20,14 @@ hist(X,xlim=c(-41,41));hist(Y,xlim=c(-41,41))
 
 qplot(Y, geom="histogram",  xlim=c(-20,20)     ) 
 qplot(X, geom="histogram",  xlim=c(-20,20)     ) 
+
+#5
+
+n=35
+CLT<-rep(NA,100)
+
+for( i in 1:100) { 	CLT[i]<-mean(rbeta(n,2,5))	}
+hist(CLT)
+
+
 
