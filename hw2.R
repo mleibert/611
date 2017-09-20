@@ -1,14 +1,14 @@
 
 r<-.5
 circle<-0
-plot(-2:2, -2:2, type = "n") 
+plot(-.5:(1.5), -.5:1.5, type = "n") 
 for (i in 1:1000) {
-	xy<-c( runif(2,-1,1) )
-	if (xy[1]^2+xy[2]^2 < 1) {circle<-circle + 1; 
+	xy<-c( runif(2,0,1) )
+	if ((xy[1]-r)^2+(xy[2]-r)^2 < r^2) {circle<-circle + 1; 
 		points(xy[1],xy[2],col="red")  } else {
-		 points(xy[1],xy[2],col="blue") } 
+		 points(xy[1],xy[2],col="blue") } }
 
-4*(circle/100)
+4*(circle/1000))
 
 
 
