@@ -16,3 +16,30 @@ require(stats) # for rnorm
 plot(-4:4, -4:4, type = "n")  # setting up coord. system
 points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
+
+
+#2 
+
+
+U=runif(10000,0,1)
+
+hist( (4*sqrt(1-U^2) )  , xlim=c(0,6))
+
+sum( (4*sqrt(1-U^2) ) /10000 )
+
+
+
+
+integrand <- function(x) {exp((-4*x)/3)*x^3 }
+plot(integrand,xlim=c(0,15))
+
+n=10000
+MC<-rep(0,n)
+for ( i in 1:n) {  U<-runif(1);	
+MC[i]<- exp((-4+4*U)/(3*U)) * ((1-U)/U)^3 * (1/U)^2;  points(U,MC[i])}
+
+sum(MC)/n*
+
+((4/3)^4)/gamma(4)
+
+
