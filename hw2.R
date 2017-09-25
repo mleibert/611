@@ -72,7 +72,15 @@ plot(seq(1:10000),ihat2,type="l",
 
 #need while loop
 
-AR<-rep(NA,1000)
+accepted<-rep(NA,1000)
+c=1
 
-for (i in 1:1000) {  y=runif(1) ;  ifelse( runif(1) <= (1/3)* y*(1-y),
-	AR[i]<-y 	, next) }
+while (length(accepted) < 1001 ) {  y=runif(1) ;
+  if( runif(1) <= (1/3)* y*(1-y)) { accepted[c]<-y;c<-c+1} else {next} }
+
+hist(rbeta(1000,2,2))
+hist(accepted)
+lines(density(rbeta(1000,2,2)))    
+    curve(dbeta(x, 2, 2), 
+          col="darkblue", lwd=2, add=TRUE, yaxt="n")
+
