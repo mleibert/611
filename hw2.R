@@ -49,19 +49,19 @@ sum( (h-barhn)^2 )/(n^2)
 
 #3
 
-f2<-function(y) {exp(-y) * sin(y) }
+s=2
+f1<-function(x){exp(-x^2) * (1/sqrt(2*pi*s^2) ) * exp( (-x^2)/(2*s^2) ) }
 
-plot(f2,xlim=c(0,2*pi))
- integrate(f2,0,2*pi)
+hx<-function(x){exp(-x^2)}
 
-uj<-runif(10000)
-ihat2<-cumsum(uj)/(1:10000)
-serrhat2<-sqrt(cumsum((uj-ihat2)^2))/(1:10000)
+n=10000
+HX<-rep(NA,n)
 
-plot(seq(1:10000),serrhat2,type="l",
-	xlab="number of iterations",
-	ylab="standard error of integral estimate",main=" ")
+for( i in 1:n ){ xj<-rnorm(1,0,2); HX[i]<- hx(xj) } 
+
+round(HX,5)
+
+sum(HX)/n
 
 
-plot(seq(1:10000),ihat2,type="l",
-	xlab="number of iterations",ylab="integral estimate",main=" ")
+1/(sqrt(2*4+1))
