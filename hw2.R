@@ -65,3 +65,14 @@ plot(seq(1:10000),serrhat2,type="l",
 
 plot(seq(1:10000),ihat2,type="l",
 	xlab="number of iterations",ylab="integral estimate",main=" ")
+
+
+#5
+
+
+#need while loop
+
+AR<-rep(NA,1000)
+
+for (i in 1:1000) {  y=runif(1) ;  ifelse( runif(1) <= (1/3)* y*(1-y),
+	AR[i]<-y 	, next) }
