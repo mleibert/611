@@ -48,24 +48,12 @@ sum( (h-barhn)^2 )/(n^2)
 
 
 #3
+	
+n=10000;h<-rep(0,n)
+for ( i in 1:n){ x<-rnorm(1,mean=0,sd=2); h[i]<-exp(-x^2) } 
+sum(h)/n 
 
-f2<-function(y) {exp(-y) * sin(y) }
-
-plot(f2,xlim=c(0,2*pi))
- integrate(f2,0,2*pi)
-
-uj<-runif(10000)
-ihat2<-cumsum(uj)/(1:10000)
-serrhat2<-sqrt(cumsum((uj-ihat2)^2))/(1:10000)
-
-plot(seq(1:10000),serrhat2,type="l",
-	xlab="number of iterations",
-	ylab="standard error of integral estimate",main=" ")
-
-
-plot(seq(1:10000),ihat2,type="l",
-	xlab="number of iterations",ylab="integral estimate",main=" ")
-
+1/(sqrt(2*4+1))
 
 #5
 
