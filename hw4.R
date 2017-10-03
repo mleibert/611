@@ -23,21 +23,14 @@ var(g) > var(f)
 integrand <- function(x) { exp( x)  }
 integrate(integrand ,0,1)
 
-n=10000
-AV<-rep(NA,n)
+n=10000;AV<-rep(NA,n)
 for (i in 1:n){	U<-runif(1);V=1-U; AV[i]<-.5* (exp(U) + exp(V) )	}
-mean(AV)
-var(AV)
+mean(AV);var(AV)
 
 MC<-rep(NA,n*2)
 #simple mc
 for (i in 1:(n*2)){ U<-runif(1) ; MC[i]<- exp(U)	}
-mean(MC)
-var(MC)
-
-
-var(AV)<var(MC)
-
+mean(MC);var(MC)
 
 (var(MC)-var(AV) / var(MC) ) * 100
 
@@ -68,22 +61,24 @@ tmt<- new("markovchain",transitionMatrix=tm,
 recurrentClasses(tmt)
 summary(tmt)
 
+#<<echo=TRUE, cache=TRUE>>=
 mat<- matrix( c(.7,0,.3,0,.6,0,.4,0,0,.5,0,.5,0,.4,0,.6 ),4,4,byrow = T)
 mat2<-matrix( c(-.3,.6,0,0,0,-1,.5,.4,.3,.4,-1,0,1,1,1,1),4,4,byrow = T)
-mat2
-
 PI=solve(mat2,c(0,0,0,1))
 
 PI%*%mat
 
-
+fractions(PI)
 
 ### 5
 genes<-matrix(0,4,4)
 N=3
 j=0:3
 
-for( i in 0:3){	genes[i+1,]<-dbinom(j,N, i/4) }
+for( i in 0:3){	genes[i+1,]<-dbinom(j,N, i/N) }
+
+source("G:\\Math\\611\\pmatrix.R")
+pmatrix(genes)
 
 sum( dbinom(j,N, i/4) )
 
@@ -94,7 +89,7 @@ choose(N,1)*(i/N)^1*(1-(i/N))^(N-1) +
 choose(N,2)*(i/N)^2*(1-(i/N))^(N-2) +
 choose(N,3)*(i/N)^3*(1-(i/N))^(N-3)
 
-
+c(33,0,0,33)%*%genes
 
 
 
