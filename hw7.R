@@ -17,6 +17,8 @@ sum(acc)/(N)
 
 length(unique(X))/5000
 
+plot(X, type="l", ylab="p")
+
 
 a=5;b=6
 
@@ -67,5 +69,39 @@ mean(X)
 mean(rgamma(11111,4.3,6.2))
 sum(acc)/N
 length(unique(X))/5000
+
+
+ 
+ rm(list = ls())
+n=13;It=10000
+
+
+MH<-function(n,It){
+	nc<-function( M ){ gamma(M) /  ( gamma((M-1)/2) *  gamma((M-1)/2))  }
+	Expmedian<<-function(Z ){( nc(n)* exp(-Z) * (1-exp(-Z))^((n-1)/2)	 * 
+				exp(-Z *((n-1)/2) )  )}
+
+	X<-acc<-rep(0,It)
+	X[1]<-1
+	
+	
+	for (i in 2:10000) {
+		Y <- rexp(1, rate = X[i-1] )
+
+		rho<-	(Expmedian(Y) / Expmedian(X[i-1] ))*
+			(dexp( X[i-1] ,rate=Y) / dexp( Y ,rate=X[i-1] ) )
+
+		if( runif(1) < rho){X[i]=Y;acc[i]<-1} else {X[i] = X[i-1] } }
+	
+	X<<-X
+	print(X);print(paste("acceptance rate:", mean(acc) ,sep=" ") )
+	print(summary(X));print(summary(acc))}
+
+MH(13,10000)
+par(mfrow=c(1,2))
+(plot(density( X ))); (curve(Expmedian, from=0, to=2.5))	
+
+
+
 
 
