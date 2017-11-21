@@ -1,0 +1,15 @@
+MHexp<-function(logf,currentvalue,B) 
+	{# B: number of iterations 
+		S<-rep(0,B) 
+		n_accept<-0 
+		for(i in 1:B) 
+		{proposal<-rexp(1,currentvalue) 
+		probacc<-exp(logf(proposal)-logf(currentvalue) 
+			+dexp(currentvalue,proposal,log=TRUE)- 
+			dexp(proposal,currentvalue,log=TRUE)) 
+		accept<-ifelse(runif(1)<probacc,1,0) 
+		currentvalue<-ifelse(accept==1,proposal,currentvalue) 
+		S[i]<-currentvalue 
+		n.accept<-n.accept+(accept==1)} 
+		c(S,n.accept/B) 
+}

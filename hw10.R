@@ -2,11 +2,9 @@ rm(list = ls())
 setwd("g:\\math\\611")
 
 bb<-read.csv("betaBLOCKERs.csv",header=T)
-tail(bb)
-
 bblist<-list()
 
-for( i in 1:max(bb$center)){
+for( i in 1){
 
 	CD<-bb[which(bb$center == i & bb$trt== "C" & bb$value== "Death" ) , ]
 	CD<-CD[1,][rep(seq_len(nrow(CD[1,])), each=sum(CD[,1])),]
@@ -24,18 +22,24 @@ for( i in 1:max(bb$center)){
 	
 	bblist[[i]]<-rbind(CD,TD,CT,TT)}
 
-  bblist<- do.call("rbind", bblist);rownames(bblist)<-NULL
+bblist<- do.call("rbind", bblist);rownames(bblist)<-NULL
 
 bblist$death<-ifelse(bblist$value == "Death" , 1,0)
 
-require(MCMCpack)
-posterior <- MCMClogit(death~as.factor(trt) , b0=0, B0=.001,data=bblist)
+sink("myfile.txt", append=FALSE, split=FALSE)
+require("MCMCpack")
+posterior <- MCMClogit(death~as.factor(trt) ,  data=bblist)
+
 plot(posterior)
+sink("myfile.txt", append=FALSE, split=FALSE)
 summary(posterior)
+sink()
+
 
 posteriors <- MCMClogit(death~as.factor(trt) ,  data=bblist)
 summary(posteriors)
 
+posteriors <- MCMCmnl(death~as.factor(trt) ,  data=bblist)
 
 #####################
 
@@ -47,11 +51,13 @@ summary(posteriors)
 
 	for(i in 1:B) 
 		{proposal<-rexp(1,currentvalue) 
-		probacc<-exp(
-		
+		probacc<-
+
+		exp(	
 		logf(proposal)-logf(currentvalue) +
 		dexp(currentvalue,proposal,log=TRUE)- 
-		dexp(proposal,currentvalue,log=TRUE)) 
+		dexp(proposal,currentvalue,log=TRUE)
+		) 
 
 		accept<-ifelse(runif(1)<probacc,1,0) 
 		
@@ -72,7 +78,7 @@ summary(posteriors)
 	for(i in 1:B) 
 		{proposal<-rnorm(1,currentvalue,SD) 	
 		
-		probacc<-(logf(proposal) )/(logf(currentvalue) )
+		probacc<-exp( (logf(proposal) )-(logf(currentvalue) ) )
 
 		accept<-ifelse(runif(1)<probacc,1,0) 
 		
@@ -87,3 +93,8 @@ summary(posteriors)
 x<-function(mu,var=1){rnorm(1,mu,sd=var)}
 
 x(3,4)
+x<-0:2
+
+1-sum(	(2^x * exp(-2))/factorial(x)	)
+	0.5939942* 0.4060058* 0.4060058
+
